@@ -13,18 +13,17 @@ if os.path.exists(ruta_excel):
     # Leemos la Hoja2 del excel
     df = pd.read_excel(ruta_excel, sheet_name='Hoja2')
     
-    # Limpieza de nombres de columnas
-    df.columns = df.columns.astype(str).str.strip().str.lower()
+# Limpieza de nombres de columnas
+df.columns = df.columns.astype(str).str.strip().str.lower()
     
-    # --- TRANSFORMACIÓN DE DATOS ---
-    # Convertimos decimales a porcentajes
-    df['victimizacion_pct'] = df['victimizacion'] * 100
-    df['ejecucion_pct'] = df['ejecucion_25'] * 100
+# --- TRANSFORMACIÓN DE DATOS ---
+# Convertimos decimales a porcentajes
+df['victimizacion_pct'] = df['victimizacion'] * 100
+df['ejecucion_pct'] = df['ejecucion_25'] * 100
     
-    # Escalamos presupuesto a millones (S/ 1,000,000)
-    df['presupuesto_mllns'] = df['presupuesto_26'] / 1_000_000
-
-    if 'departamento' not in df.columns:
+# Escalamos presupuesto a millones (S/ 1,000,000)
+df['presupuesto_mllns'] = df['presupuesto_26'] / 1_000_000
+if 'departamento' not in df.columns:
         print(f"Error: No encontré la columna 'departamento'. Columnas: {list(df.columns)}")
         exit()
 else:
@@ -75,13 +74,13 @@ for col, title, ax in maps_to_plot:
             legend_kwds={'shrink': 0.5, 'orientation': 'horizontal', 'pad': 0.01}
         )
         
-        # Resaltar Callao
-        callao = merged[merged['NOMBDEP_NORM'] == 'CALLAO']
+# Resaltar Callao
+callao = merged[merged['NOMBDEP_NORM'] == 'CALLAO']
         if not callao.empty:
             callao.plot(ax=ax, facecolor='none', edgecolor='black', linewidth=1.5)
 
-        # --- AÑADIR ETIQUETAS AL MAPA DE PRESUPUESTO ---
-        if col == 'presupuesto_mllns':
+# --- AÑADIR ETIQUETAS AL MAPA DE PRESUPUESTO ---
+if col == 'presupuesto_mllns':
             for idx, row in merged.iterrows():
                 if pd.notnull(row[col]):
                     # Obtener el centro del departamento para poner el texto
@@ -96,7 +95,6 @@ for col, title, ax in maps_to_plot:
                                 path_effects=None) 
     else:
         ax.text(0.5, 0.5, f'Columna "{col}" no encontrada', ha='center')
-    
     ax.set_title(title, fontsize=16, fontweight='bold', pad=10)
     ax.axis('off')
 
