@@ -1,3 +1,4 @@
+```
 ## Generación de mapas coropléticos para análisis presupuestal del PP 0030
 import pandas as pd
 import geopandas as gpd
@@ -100,6 +101,7 @@ if col == 'presupuesto_mllns':
 
 plt.suptitle('Perspectiva presupuestal de seguridad ciudadana en Perú (2025-2026)', 
              fontsize=24, y=0.96, fontweight='bold')
+```
 
 # Guardar resultado
 output_path = os.path.join(os.path.dirname(ruta_excel), "analisis_seguridad_final.png")
